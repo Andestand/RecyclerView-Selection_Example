@@ -8,7 +8,6 @@ import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import project.example.rvse.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
