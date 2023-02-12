@@ -13,7 +13,6 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
     
     lateinit var tracker: SelectionTracker<Model>
 
-
     class HolderView(private var binding: TemplateBinding,
                      private val items: List<Model>?
     ): RecyclerView.ViewHolder(binding.root), ViewHolderWithDetails<Model> {
