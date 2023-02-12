@@ -1,6 +1,5 @@
 package project.example.rvse
 
-
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
