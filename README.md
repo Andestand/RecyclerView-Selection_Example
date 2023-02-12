@@ -1,2 +1,1 @@
-# RecyclerView-Selection_Example
- 
+Пример работы RecyclerView-Selection

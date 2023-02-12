@@ -42,17 +42,17 @@ class MainActivity : AppCompatActivity() {
         tracker.addObserver(object : SelectionTracker.SelectionObserver<Model>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
-                Log.d("tag", "Начало работы метода")
+                Log.d("tracker", "Начало работы метода")
                 if (tracker.hasSelection() && actionMode == null) {
-                    Log.d("tag", "Первое условие")
+                    Log.d("tracker", "Начало работы ActionMode")
                     actionMode = startSupportActionMode(ActionModeController(tracker))
                     setSelectedTitle(tracker.selection.size())
                 } else if(!tracker.hasSelection()) {
-                    Log.d("tag", "Трекер закончил работу")
+                    Log.d("tracker", "Трекер закончил работу")
                     actionMode?.finish()
                     actionMode = null
                 } else {
-                    Log.d("tag", "Третье условие")
+                    Log.d("tracker", "Третье условие")
                     setSelectedTitle(tracker.selection.size())
                 }
             }
