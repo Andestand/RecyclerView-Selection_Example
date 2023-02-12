@@ -4,37 +4,36 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.CheckBox
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import project.example.rvse.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     private val adapter = Adapter()
     private var actionMode: ActionMode? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         init()
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun init() {
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerview)
-
-        recyclerView.layoutManager = GridLayoutManager(this, 1)
-        recyclerView.adapter = adapter
+        binding.recyclerview.layoutManager = GridLayoutManager(this, 1)
+        binding.recyclerview.adapter = adapter
 
         val tracker = SelectionTracker.Builder(
             "trackerID",
-            recyclerView,
+            binding.recyclerview,
             ModelKeyProvider(adapter.array),
-            MyDetailsLookup(recyclerView),
+            MyDetailsLookup(binding.recyclerview),
             StorageStrategy.createParcelableStorage(Model::class.java)
         ).build()
         adapter.tracker = tracker
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     actionMode?.finish()
                     actionMode = null
                 } else {
-                    Log.d("tracker", "Третье условие")
+                    Log.d("tracker", "Выделение элемента или наборот")
                     setSelectedTitle(tracker.selection.size())
                 }
             }

@@ -3,7 +3,6 @@ package project.example.rvse
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
@@ -23,6 +22,7 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
         override fun getItemDetail(): ItemDetailsLookup.ItemDetails<Model> {
             return ModelDetails(adapterPosition, items?.getOrNull(adapterPosition))
         }
+
         var index = 0
         fun bind(model: Model) {
             model.id = index++

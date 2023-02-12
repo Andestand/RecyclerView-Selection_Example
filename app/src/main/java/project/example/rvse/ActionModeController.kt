@@ -1,5 +1,6 @@
 package project.example.rvse
 
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
@@ -26,5 +27,6 @@ class ActionModeController(private val tracker: SelectionTracker<Model>?): Actio
 
     override fun onDestroyActionMode(mode: ActionMode?) {
         tracker?.clearSelection()
+        Log.d("ActionMode", "Трекер очистил список выделенных элементов и завершил работу")
     }
 }
