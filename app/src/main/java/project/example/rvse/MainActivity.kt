@@ -43,15 +43,15 @@ class MainActivity : AppCompatActivity() {
                 Log.d("tracker", "Начало работы метода")
                 if (tracker.hasSelection() && actionMode == null) {
                     Log.d("tracker", "Начало работы ActionMode")
-                    actionMode = startSupportActionMode(ActionModeController(tracker))
                     setSelectedTitle(tracker.selection.size())
+                    actionMode = startSupportActionMode(ActionModeController(tracker))
                 } else if(!tracker.hasSelection()) {
-                    Log.d("tracker", "Трекер закончил работу")
                     actionMode?.finish()
                     actionMode = null
+                    Log.d("tracker", "Трекер закончил работу")
                 } else {
-                    Log.d("tracker", "Выделение элемента или наборот")
                     setSelectedTitle(tracker.selection.size())
+                    Log.d("tracker", "Выделение элемента или наборот")
                 }
             }
         })

@@ -44,13 +44,14 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
 
     override fun onBindViewHolder(holder: HolderView, position: Int) = Unit
 
-    @SuppressLint("NotifyDataSetChanged")
+
     override fun onBindViewHolder(holder: HolderView, position: Int, payloads: List<Any>) {
         holder.setActivated(tracker.isSelected(array[position]))
 
         if (tracker.isSelected(array[position])) {
             holder.itemView.setOnClickListener {
                 tracker.deselect(array[position])
+
                 holder.itemView.setBackgroundColor(0)
             }
         } else {
