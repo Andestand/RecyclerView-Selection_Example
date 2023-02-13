@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
                 super.onSelectionChanged()
                 Log.d("tracker", "Начало работы метода")
                 if (tracker.hasSelection() && actionMode == null) {
-                    Log.d("tracker", "Начало работы ActionMode")
                     setSelectedTitle(tracker.selection.size())
                     actionMode = startSupportActionMode(ActionModeController(tracker))
+                    Log.d("tracker", "Начало работы ActionMode")
                 } else if(!tracker.hasSelection()) {
                     actionMode?.finish()
                     actionMode = null
@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSelectedTitle(selected: Int) {
         actionMode?.title = "Выбрано: $selected"
+        Log.d("tag", "счётчик выделеных элементов")
     }
 
 }
