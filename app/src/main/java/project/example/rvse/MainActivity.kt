@@ -1,6 +1,5 @@
 package project.example.rvse
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +7,7 @@ import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import project.example.rvse.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun init() {
+
         binding.recyclerview.layoutManager = GridLayoutManager(this, 1)
         binding.recyclerview.adapter = adapter
 
@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
                 super.onSelectionChanged()
                 Log.d("tracker", "Начало работы метода")
                 if (tracker.hasSelection() && actionMode == null) {
-                    setSelectedTitle(tracker.selection.size())
                     actionMode = startSupportActionMode(ActionModeController(tracker))
+                    setSelectedTitle(tracker.selection.size())
                     Log.d("tracker", "Начало работы ActionMode")
                 } else if(!tracker.hasSelection()) {
                     actionMode?.finish()
@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSelectedTitle(selected: Int) {
         actionMode?.title = "Выбрано: $selected"
-        Log.d("tag", "счётчик выделеных элементов")
+        Log.d("setSelectedTitle", "Выбрано: $selected")
     }
-
 }
