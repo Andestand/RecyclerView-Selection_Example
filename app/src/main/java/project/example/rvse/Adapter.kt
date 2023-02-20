@@ -1,11 +1,9 @@
 package project.example.rvse
 
-import android.annotation.SuppressLint
 import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
@@ -52,17 +50,20 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
         holder.setActivated(tracker.isSelected(array[position]))
 
 
-        if (tracker.isSelected(array[position])) {
-            holder.itemView.setOnClickListener {
+        //holder.itemView.onClick {
+            if (tracker.isSelected(array[position])) {
+                holder.itemView.setOnClickListener {
                     tracker.deselect(array[position])
                     holder.itemView.setBackgroundColor(0)
-            }
-        } else {
-            holder.itemView.setOnClickListener {
+                }
+            } else {
+                holder.itemView.setOnClickListener {
                     tracker.select(array[position])
                     holder.itemView.setBackgroundColor(R.drawable.ic_launcher_background)
+                }
             }
-        }
+        //}
+
 
         if (!tracker.hasSelection()) holder.itemView.setBackgroundColor(0)
 
