@@ -6,7 +6,9 @@ import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
 
-class ActionModeController(private val tracker: SelectionTracker<Model>?): ActionMode.Callback {
+class ActionModeController(var tracker: SelectionTracker<Model>? = null): ActionMode.Callback {
+
+
     var isActionMode: Boolean = false
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
@@ -29,8 +31,8 @@ class ActionModeController(private val tracker: SelectionTracker<Model>?): Actio
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
+        isActionMode = true
         tracker?.clearSelection()
-        //isActionMode = true
         Log.d("ActionMode", "Трекер очистил список выделенных элементов и завершил работу")
     }
 }

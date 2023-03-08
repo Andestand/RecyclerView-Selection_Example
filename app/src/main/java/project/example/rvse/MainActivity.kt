@@ -11,20 +11,18 @@ import project.example.rvse.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     private val adapter = Adapter()
     var actionMode: ActionMode? = null
+    val isAM = ActionModeController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
-
     }
 
     private fun init() {
-
         binding.recyclerview.layoutManager = GridLayoutManager(this, 1)
         binding.recyclerview.adapter = adapter
 
@@ -37,44 +35,23 @@ class MainActivity : AppCompatActivity() {
         ).build()
         adapter.tracker = tracker
 
-
-
-        /*tracker.addObserver(object : SelectionTracker.SelectionObserver<Model>() {
-            override fun onSelectionChanged() {
-                super.onSelectionChanged()
-                Log.d("tracker", "Начало работы метода")
-                /*if (actionMode != null) {
-                    actionMode = null
-                }*/
-                if (tracker.hasSelection() && actionMode == null) {
-                    actionMode = startSupportActionMode(ActionModeController(tracker))
-                    setSelectedTitle(tracker.selection.size())
-                    Log.d("tracker", "Начало работы ActionMode")
-                } else if(tracker.hasSelection() || /*!tracker.hasSelection()*/ /*&&*/ !tracker.clearSelection() && actionMode != null) {
-                    //actionMode?.finish()
-                    setSelectedTitle(tracker.selection.size())
-                    actionMode = null
-                    Log.d("tracker", "Трекер закончил работу")
-                } else {
-                    setSelectedTitle(tracker.selection.size())
-                    Log.d("tracker", "Выделение элемента или наборот")
-                }
-
-            }
-        })*/
-
         tracker.addObserver(object : SelectionTracker.SelectionObserver<Model>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
-
-                if (tracker.hasSelection() && actionMode == null) {
-                    actionMode = startSupportActionMode(ActionModeController(tracker))
+                if (tracker.hasSelection() && actionMode == null && !isAM.isActionMode
+                    && isAM.tracker == null) {
+                    isAM.tracker = tracker
+                    actionMode = startSupportActionMode(isAM)
                     setSelectedTitle(tracker.selection.size())
                     Log.d("tracker", "Начало работы ActionMode")
-                } else if (!tracker.hasSelection() && !ActionModeController(tracker).isActionMode) {
-                    setSelectedTitle(tracker.selection.size())
+                } else if (isAM.isActionMode && actionMode != null && isAM.tracker != null
+                    && tracker.selection.size() >= 0) {
                     actionMode = null
-
+                    isAM.tracker = null
+                    isAM.isActionMode = false
+                    isAM.tracker = tracker
+                    actionMode = startSupportActionMode(isAM)
+                    setSelectedTitle(tracker.selection.size())
                     Log.d("tracker", "Трекер закончил работу")
                 } else {
                     setSelectedTitle(tracker.selection.size())
@@ -85,6 +62,5 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSelectedTitle(selected: Int) {
         actionMode?.title = "Выбрано: $selected"
-        Log.d("setSelectedTitle", "Выбрано: $selected")
     }
 }
