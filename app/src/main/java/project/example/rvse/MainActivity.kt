@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        binding.recyclerview.layoutManager = GridLayoutManager(this, 1)
+        binding.recyclerview.layoutManager = GridLayoutManager(this, 3)
         binding.recyclerview.adapter = adapter
 
         val tracker = SelectionTracker.Builder(
