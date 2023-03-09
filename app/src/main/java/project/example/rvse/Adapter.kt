@@ -1,6 +1,8 @@
 package project.example.rvse
 
+import android.annotation.SuppressLint
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,43 +50,23 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
 
     override fun onBindViewHolder(holder: HolderView, position: Int, payloads: List<Any>) {
         holder.setActivated(tracker.isSelected(array[position]))
-
-
-        //holder.itemView.onClick {
-            if (tracker.isSelected(array[position])) {
-                holder.itemView.setOnClickListener {
-                    tracker.deselect(array[position])
-                    holder.itemView.setBackgroundColor(0)
-                }
-            } else {
-                holder.itemView.setOnClickListener {
-                    tracker.select(array[position])
-                    holder.itemView.setBackgroundColor(R.drawable.ic_launcher_background)
-                }
-            }
-        //}
-
-
         if (!tracker.hasSelection()) holder.itemView.setBackgroundColor(0)
+
+        if (!tracker.isSelected(array[position])) {
+            holder.itemView.setOnClickListener {
+                tracker.select(array[position])
+                holder.itemView.setBackgroundColor(R.drawable.ic_launcher_background)
+            }
+        } else {
+            holder.itemView.setOnClickListener {
+                tracker.deselect(array[position])
+                holder.itemView.setBackgroundColor(0)
+            }
+        }
 
         if (SelectionTracker.SELECTION_CHANGED_MARKER !in payloads) {
             holder.bind(array[position])
         }
-    }
-
-    private inline fun View.onClick(delayMillis: Long = 500, crossinline clickListener: (View) -> Unit) {
-        var clickMillis = 0L
-
-        setOnLongClickListener {
-            val elapsedRealTime = SystemClock.elapsedRealtime()
-
-            if (elapsedRealTime > clickMillis) {
-                clickMillis = elapsedRealTime + delayMillis
-                clickListener.invoke(it)
-            }
-            true
-        }
-
     }
 
     override fun getItemCount() = array.size
