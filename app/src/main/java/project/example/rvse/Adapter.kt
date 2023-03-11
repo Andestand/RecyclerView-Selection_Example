@@ -1,10 +1,6 @@
 package project.example.rvse
 
-import android.annotation.SuppressLint
-import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
@@ -46,7 +42,6 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
     }
 
     override fun onBindViewHolder(holder: HolderView, position: Int) = Unit
-
 
     override fun onBindViewHolder(holder: HolderView, position: Int, payloads: List<Any>) {
         holder.setActivated(tracker.isSelected(array[position]))
