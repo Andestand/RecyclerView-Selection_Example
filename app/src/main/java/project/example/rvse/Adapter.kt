@@ -1,6 +1,7 @@
 package project.example.rvse
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
@@ -13,11 +14,23 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
     lateinit var tracker: SelectionTracker<Model>
 
     class HolderView(private var binding: TemplateBinding,
-                     private val items: List<Model>?
+                     private val items: List<Model>?,
+                     listener: Listener?
     ): RecyclerView.ViewHolder(binding.root), ViewHolderWithDetails<Model> {
 
         override fun getItemDetail(): ItemDetailsLookup.ItemDetails<Model> {
             return ModelDetails(adapterPosition, items?.getOrNull(adapterPosition))
+        }
+
+        init {
+            itemView.setOnClickListener {
+                listener?.onClick(adapterPosition, itemView)
+            }
+
+            itemView.setOnLongClickListener {
+                listener?.onLongClick(adapterPosition, itemView)
+                true
+            }
         }
 
         var index = 0
@@ -30,6 +43,11 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
         fun setActivated(isActivated: Boolean) {
             itemView.isActivated = isActivated
         }
+
+        interface Listener {
+            fun onClick(position: Int, view: View)
+            fun onLongClick(position: Int, view: View)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderView {
@@ -37,6 +55,7 @@ class Adapter: RecyclerView.Adapter<Adapter.HolderView>() {
             TemplateBinding.inflate(LayoutInflater.from(parent.context),
                 parent, false
             ),
+            null,
             null
         )
     }
