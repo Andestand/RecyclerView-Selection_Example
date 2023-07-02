@@ -3,6 +3,7 @@ package project.example.rvse
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
@@ -35,17 +36,36 @@ class MainActivity : AppCompatActivity() {
         ).build()
         adapter.tracker = tracker
 
+
         tracker.addObserver(object : SelectionTracker.SelectionObserver<Model>() {
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
+
+                /*object : Adapter.HolderView.Listener {
+                    override fun onClick(position: Int, view: View) {
+                        setSelectedTitle(tracker.selection.size())
+                    }
+
+                    override fun onLongClick(position: Int, view: View) {
+                        isAM.tracker = tracker
+                        actionMode = startSupportActionMode(isAM)
+                        setSelectedTitle(tracker.selection.size())
+                        Log.d("tracker", "Начало работы ActionMode")
+                    }
+
+                }*/
+
+
                 if (tracker.hasSelection() && actionMode == null && !isAM.isActionMode
-                    && isAM.tracker == null) {
+                    && isAM.tracker == null
+                ) {
                     isAM.tracker = tracker
                     actionMode = startSupportActionMode(isAM)
                     setSelectedTitle(tracker.selection.size())
                     Log.d("tracker", "Начало работы ActionMode")
                 } else if (isAM.isActionMode && actionMode != null && isAM.tracker != null
-                    && tracker.selection.size() >= 0) {
+                    && tracker.selection.size() >= 0
+                ) {
                     actionMode = null
                     isAM.tracker = null
                     isAM.isActionMode = false
@@ -63,4 +83,5 @@ class MainActivity : AppCompatActivity() {
     private fun setSelectedTitle(selected: Int) {
         actionMode?.title = "Выбрано: $selected"
     }
+
 }
